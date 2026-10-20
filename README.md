@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# TaskFlow Full-Stack
+# TaskFlow
 
 Versi database dari TaskFlow menggunakan:
 - Frontend: HTML, CSS, JavaScript
