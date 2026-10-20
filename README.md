@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TaskFlow Full-Stack
 
 Versi database dari TaskFlow menggunakan:
@@ -90,3 +91,6 @@ Kolom `due_date` ditambahkan otomatis saat server dijalankan, jadi tabel lama ti
 | DELETE | `/api/tasks/completed/all` | Menghapus tugas selesai |
 
 Ini project belajar lokal. Semua route tugas butuh login. Sebelum dipakai publik, tambahkan rate limiting, konfigurasi HTTPS, dan pengelolaan secret yang aman.
+=======
+# Project_Web
+>>>>>>> b0c521e85ad2cf3f9e5e6f2001602b75be8d51e1
