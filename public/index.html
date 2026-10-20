@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow</title>
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem("theme"); } catch (e) {}
+      var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.dataset.theme = dark ? "dark" : "light";
+    })();
+  </script>
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/script.js" defer></script>
+</head>
+<body>
+  <div id="authView" class="auth-page" hidden>
+    <section class="auth-card">
+      <div class="brand"><span class="brand-icon">✓</span><span>TaskFlow</span></div>
+
+      <h2 id="authTitle">Masuk</h2>
+      <p class="auth-sub" id="authSub">Masuk untuk melihat daftar tugasmu.</p>
+
+      <form id="authForm" class="auth-form">
+        <label>Username
+          <input id="authUsername" type="text" autocomplete="username" minlength="3" maxlength="50" required />
+        </label>
+        <label>Password
+          <input id="authPassword" type="password" autocomplete="current-password" minlength="6" required />
+        </label>
+        <label id="confirmWrap" hidden>Ulangi password
+          <input id="authConfirm" type="password" autocomplete="new-password" minlength="6" />
+        </label>
+
+        <p id="authNotice" class="notice" role="status" hidden></p>
+        <button id="authSubmit" type="submit" class="auth-submit">Masuk</button>
+      </form>
+
+      <p class="auth-switch">
+        <span id="switchText">Belum punya akun?</span>
+        <button id="switchBtn" type="button">Daftar di sini</button>
+      </p>
+    </section>
+  </div>
+
+  <main class="app" id="appView" hidden>
+    <header class="hero">
+      <div class="topbar">
+        <div class="brand"><span class="brand-icon">✓</span><span>TaskFlow</span></div>
+        <div class="user-box">
+          <button id="themeToggle" class="logout-button theme-toggle" type="button" aria-label="Ganti tema">Gelap</button>
+          <span class="user-name">Halo, <strong id="username">...</strong></span>
+          <button id="logoutButton" class="logout-button" type="button">Keluar</button>
+        </div>
+      </div>
+      <p class="eyebrow">RUANG KERJA PRIBADI</p>
+      <h1>Ubah rencana<br /><span>jadi progres.</span></h1>
+      <p class="subtitle">Tugas disimpan ke database PostgreSQL melalui API.</p>
+      <div class="date-pill" id="today"></div>
+    </header>
+
+    <section class="summary" aria-label="Ringkasan tugas">
+      <article class="stat"><span>Total tugas</span><strong id="totalCount">0</strong></article>
+      <article class="stat"><span>Belum selesai</span><strong id="pendingCount">0</strong></article>
+      <article class="stat"><span>Selesai</span><strong id="doneCount">0</strong></article>
+      <article class="stat stat-late"><span>Terlambat</span><strong id="lateCount">0</strong></article>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div><p class="eyebrow">DAFTAR KERJA</p><h2>Tugas saya</h2></div>
+        <span class="task-total" id="listCount">0 tugas</span>
+      </div>
+
+      <form id="taskForm" class="task-form">
+        <label class="sr-only" for="taskInput">Nama tugas</label>
+        <input id="taskInput" type="text" placeholder="Contoh: Belajar JavaScript 30 menit..." maxlength="120" required />
+        <input id="dueInput" type="date" aria-label="Tenggat waktu" />
+        <select id="priorityInput" aria-label="Prioritas">
+          <option value="normal">Normal</option>
+          <option value="high">Tinggi</option>
+          <option value="low">Rendah</option>
+        </select>
+        <button type="submit" class="add-button">+ Tambah</button>
+      </form>
+
+      <p id="notice" class="notice" role="status" hidden></p>
+      <div class="search-row">
+        <label class="sr-only" for="searchInput">Cari tugas</label>
+        <input id="searchInput" type="search" placeholder="Cari tugas..." autocomplete="off" />
+        <label class="sr-only" for="sortSelect">Urutkan</label>
+        <select id="sortSelect">
+          <option value="newest">Urut: terbaru</option>
+          <option value="due">Urut: tenggat terdekat</option>
+          <option value="priority">Urut: prioritas</option>
+          <option value="name">Urut: nama A-Z</option>
+        </select>
+      </div>
+      <div class="toolbar">
+        <div class="filters" role="group" aria-label="Filter tugas">
+          <button class="filter active" data-filter="all" type="button">Semua</button>
+          <button class="filter" data-filter="pending" type="button">Aktif</button>
+          <button class="filter" data-filter="done" type="button">Selesai</button>
+        </div>
+        <button id="clearDone" class="clear-button" type="button">Hapus yang selesai</button>
+      </div>
+
+      <ul id="taskList" class="task-list"></ul>
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">✦</div>
+        <h3>Belum ada tugas</h3>
+        <p>Tambahkan tugas pertama kamu di atas.</p>
+      </div>
+    </section>
+    <footer>HTML · CSS · JavaScript · Node.js · Express · PostgreSQL</footer>
+  </main>
+</body>
+</html>
